@@ -28,11 +28,8 @@ COPY --from=dependencies /app/vendor ./vendor
 COPY . .
 COPY --from=frontend /app/public/app ./public/app
 
-RUN sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
-    && sed -ri 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf \
-    && sed -ri '/DocumentRoot /a\    FallbackResource /index.php' /etc/apache2/sites-available/000-default.conf \
-    && sed -ri '/DocumentRoot /a\    ErrorDocument 404 /index.php' /etc/apache2/sites-available/000-default.conf \
-    && printf '%s\n' '<Directory /var/www/html/public>' '    AllowOverride All' '    Require all granted' '    RewriteEngine On' '    RewriteCond %{REQUEST_FILENAME} !-f' '    RewriteCond %{REQUEST_FILENAME} !-d' '    RewriteRule ^ index.php [L]' '</Directory>' >> /etc/apache2/apache2.conf \
+RUN printf '%s\n' '<VirtualHost *:80>' '    DocumentRoot /var/www/html/public' '    <Directory /var/www/html/public>' '        Options -MultiViews +FollowSymLinks' '        AllowOverride All' '        Require all granted' '        DirectoryIndex index.php' '        RewriteEngine On' '        RewriteCond %{REQUEST_FILENAME} !-f' '        RewriteCond %{REQUEST_FILENAME} !-d' '        RewriteRule ^ index.php [L]' '    </Directory>' '    ErrorDocument 404 /index.php' '</VirtualHost>' > /etc/apache2/sites-available/000-default.conf \
+    && printf '%s\n' '<Directory /var/www/html/public>' '    AllowOverride All' '    Require all granted' '</Directory>' >> /etc/apache2/apache2.conf \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
     && touch database/database.sqlite \
     && chown -R www-data:www-data storage bootstrap/cache

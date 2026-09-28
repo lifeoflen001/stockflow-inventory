@@ -36,4 +36,4 @@ RUN printf '%s\n' '<VirtualHost *:80>' '    DocumentRoot /var/www/html/public' '
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "port=${PORT:-10000}; sed -ri \"s/Listen 80/Listen ${port}/; s/<VirtualHost \\*:80>/<VirtualHost *:${port}>/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; php artisan storage:link --force; php artisan config:cache; php artisan view:cache; php artisan migrate --force; exec apache2-foreground"]
+CMD ["sh", "-c", "set -e; port=${PORT:-10000}; sed -ri \"s/Listen 80/Listen ${port}/; s/<VirtualHost \\*:80>/<VirtualHost *:${port}>/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; php artisan storage:link --force; php artisan config:cache; php artisan view:cache; php artisan migrate --force; php artisan db:seed --force; if [ -n \"${SUPERADMIN_EMAIL:-}\" ] && [ -n \"${SUPERADMIN_PASSWORD:-}\" ]; then php artisan superadmin:ensure --email=\"$SUPERADMIN_EMAIL\" --name=\"${SUPERADMIN_NAME:-System Administrator}\" --password=\"$SUPERADMIN_PASSWORD\" --organization=\"${SUPERADMIN_ORGANIZATION:-STOCKFLOW}\"; fi; exec apache2-foreground"]

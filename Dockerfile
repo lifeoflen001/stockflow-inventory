@@ -33,6 +33,6 @@ RUN sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-availabl
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
     && chown -R www-data:www-data storage bootstrap/cache
 
-EXPOSE 80
+EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan storage:link --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && apache2-foreground"]
+CMD ["sh", "-c", "port=${PORT:-10000}; sed -ri \"s/Listen 80/Listen ${port}/; s/<VirtualHost \\*:80>/<VirtualHost *:${port}>/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; php artisan storage:link --force; php artisan config:cache; php artisan route:cache; php artisan view:cache; php artisan migrate --force; exec apache2-foreground"]

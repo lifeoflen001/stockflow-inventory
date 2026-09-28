@@ -1,4 +1,4 @@
-FROM node:20-alpine AS frontend
+FROM node:24-alpine AS frontend
 
 WORKDIR /app
 COPY package*.json ./
@@ -19,7 +19,7 @@ FROM php:8.2-apache
 WORKDIR /var/www/html
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libpq-dev libzip-dev unzip \
+    && apt-get install -y --no-install-recommends libpq-dev libsqlite3-dev libzip-dev unzip \
     && docker-php-ext-install pdo_pgsql pdo_sqlite zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
@@ -36,4 +36,4 @@ RUN sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-availabl
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "port=${PORT:-10000}; sed -ri \"s/Listen 80/Listen ${port}/; s/<VirtualHost \\*:80>/<VirtualHost *:${port}>/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; php artisan storage:link --force; php artisan config:cache; php artisan route:cache; php artisan view:cache; php artisan migrate --force; exec apache2-foreground"]
+CMD ["sh", "-c", "port=${PORT:-10000}; sed -ri \"s/Listen 80/Listen ${port}/; s/<VirtualHost \\*:80>/<VirtualHost *:${port}>/\" /etc/apache2/ports.conf /etc/apache2/sites-available/000-default.conf; php artisan storage:link --force; php artisan config:cache; php artisan view:cache; php artisan migrate --force; exec apache2-foreground"]

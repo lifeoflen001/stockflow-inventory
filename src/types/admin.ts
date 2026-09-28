@@ -1,0 +1,4 @@
+export interface Permission { id: number; name: string; group: string }
+export interface Role { id: number; name: string; label: string; permissions: Permission[]; permissions_count?: number }
+export interface ManagedUser { id: string; name: string; email: string; avatarUrl: string | null; isActive: boolean; joinedAt: string | null; lastLoginAt: string | null; lastActiveAt: string | null; roles: Array<Pick<Role, "id" | "name" | "label">>; permissions: string[]; permissionOverrides?: Array<{ id: number; name: string; allowed: boolean }>; role: Pick<Role, "id" | "name" | "label"> | null; department?: { id: number; name: string; code: string } | null; supplier?: { id: number; name: string } | null }
+export interface UserInvitation { id: number; email: string; expires_at: string; accepted_at: string | null; revoked_at: string | null; role: Pick<Role, "id" | "name" | "label">; inviter: { id: number; name: string } }

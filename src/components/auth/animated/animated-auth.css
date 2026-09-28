@@ -1,0 +1,709 @@
+﻿.stockflow-auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.stockflow-auth-card {
+  width: min(1080px, 96vw);
+  min-height: 650px;
+
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.055);
+  border-radius: 22px;
+
+  box-shadow:
+    0 28px 70px rgba(17, 17, 20, 0.12);
+
+  animation:
+    stockflowAuthCardEnter 650ms
+    cubic-bezier(0.2, 0.85, 0.2, 1) both;
+}
+
+@keyframes stockflowAuthCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================================================
+   LEFT CHARACTER STAGE
+========================================================= */
+
+.stockflow-auth-stage {
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #efedf1;
+}
+
+.stockflow-auth-character-scene {
+  position: relative;
+
+  width: 500px;
+  height: 420px;
+
+  margin-bottom: 30px;
+
+  transform-origin: center bottom;
+}
+
+.stockflow-auth-floor {
+  position: absolute;
+
+  left: 55px;
+  right: 55px;
+  bottom: 40px;
+
+  height: 2px;
+
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.stockflow-auth-character {
+  position: absolute;
+
+  transform-origin: 50% 100%;
+
+  will-change: transform;
+
+  transition:
+    filter 160ms ease;
+}
+
+.stockflow-auth-character .body {
+  position: absolute;
+  inset: 0;
+
+  transition:
+    clip-path 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-radius 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stockflow-auth-face {
+  position: absolute;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+
+  transition:
+    transform 100ms linear;
+}
+
+/* ALL characters use white eye + black pupil */
+.stockflow-auth-eye {
+  position: relative;
+
+  display: block;
+
+  width: 16px;
+  height: 16px;
+
+  overflow: hidden;
+
+  flex: 0 0 16px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.05);
+
+  transform-origin: center;
+}
+
+.stockflow-auth-pupil {
+  position: absolute;
+
+  left: 5.5px;
+  top: 5.5px;
+
+  width: 5px;
+  height: 5px;
+
+  background: #111111;
+
+  border-radius: 50%;
+
+  will-change: transform;
+}
+
+.stockflow-auth-blink .stockflow-auth-eye {
+  transform: scaleY(0.14);
+}
+
+.stockflow-auth-blink .stockflow-auth-pupil {
+  opacity: 0;
+}
+
+.stockflow-auth-mouth {
+  position: absolute;
+  display: block;
+
+  transform-origin: center;
+}
+
+/* =========================================================
+   PURPLE
+========================================================= */
+
+.stockflow-auth-purple {
+  width: 128px;
+  height: 245px;
+
+  left: 132px;
+  bottom: 42px;
+
+  z-index: 1;
+}
+
+.stockflow-auth-purple .body {
+  background: var(--purple);
+
+  clip-path:
+    polygon(
+      0 0,
+      100% 8%,
+      100% 100%,
+      0 100%
+    );
+}
+
+.stockflow-auth-purple .stockflow-auth-face {
+  top: 37px;
+  right: 17px;
+
+  gap: 19px;
+}
+
+.stockflow-auth-purple .stockflow-auth-mouth {
+  right: 39px;
+  top: 68px;
+
+  width: 16px;
+  height: 9px;
+
+  border-top:
+    2px solid rgba(30, 10, 90, 0.85);
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   BLACK
+========================================================= */
+
+.stockflow-auth-black {
+  width: 82px;
+  height: 178px;
+
+  left: 226px;
+  bottom: 42px;
+
+  z-index: 3;
+}
+
+.stockflow-auth-black .body {
+  background: var(--black);
+
+  clip-path:
+    polygon(
+      8% 0,
+      100% 4%,
+      100% 100%,
+      0 100%,
+      0 16%
+    );
+}
+
+.stockflow-auth-black .stockflow-auth-face {
+  top: 27px;
+  left: 16px;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   YELLOW
+========================================================= */
+
+.stockflow-auth-yellow {
+  width: 96px;
+  height: 165px;
+
+  left: 307px;
+  bottom: 42px;
+
+  z-index: 2;
+}
+
+.stockflow-auth-yellow .body {
+  background: var(--yellow);
+
+  border-radius:
+    52px 52px 0 0;
+}
+
+.stockflow-auth-yellow .stockflow-auth-face {
+  top: 34px;
+  left: 23px;
+
+  gap: 10px;
+}
+
+.stockflow-auth-yellow .stockflow-auth-mouth {
+  left: 38px;
+  top: 62px;
+
+  width: 35px;
+  height: 8px;
+
+  border-top: 3px solid #1c1c1d;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   ORANGE
+========================================================= */
+
+.stockflow-auth-orange {
+  width: 220px;
+  height: 125px;
+
+  left: 48px;
+  bottom: 42px;
+
+  z-index: 5;
+}
+
+.stockflow-auth-orange .body {
+  background: var(--orange);
+
+  border-radius:
+    130px 130px 0 0;
+}
+
+.stockflow-auth-orange .stockflow-auth-face {
+  top: 47px;
+  left: 85px;
+
+  gap: 15px;
+}
+
+.stockflow-auth-orange .stockflow-auth-mouth {
+  left: 104px;
+  top: 75px;
+
+  width: 17px;
+  height: 8px;
+
+  border-top:
+    2px solid #533024;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   EXPRESSIONS
+========================================================= */
+
+.stockflow-auth-expression-curious
+.stockflow-auth-orange .stockflow-auth-mouth {
+  top: 69px;
+
+  border-top: 0;
+  border-bottom:
+    2px solid #533024;
+}
+
+.stockflow-auth-expression-curious
+.stockflow-auth-yellow .stockflow-auth-mouth {
+  width: 30px;
+
+  transform: rotate(4deg);
+}
+
+.stockflow-auth-expression-worried
+.stockflow-auth-purple .stockflow-auth-mouth {
+  top: 61px;
+
+  border-top: 0;
+  border-bottom:
+    2px solid rgba(30, 10, 90, 0.85);
+}
+
+.stockflow-auth-expression-worried
+.stockflow-auth-orange .stockflow-auth-mouth {
+  top: 70px;
+
+  width: 18px;
+
+  border-top: 0;
+  border-bottom:
+    2px solid #533024;
+}
+
+.stockflow-auth-expression-worried
+.stockflow-auth-yellow .stockflow-auth-mouth {
+  width: 27px;
+
+  transform: rotate(-5deg);
+}
+
+/* =========================================================
+   FORM SIDE
+========================================================= */
+
+.stockflow-auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 54px 58px;
+
+  background: #ffffff;
+}
+
+.stockflow-auth-form {
+  width: 100%;
+  max-width: 360px;
+}
+
+.stockflow-auth-brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 39px;
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.stockflow-auth-form h1 {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -1.7px;
+
+  font-weight: 750;
+}
+
+.stockflow-auth-subtitle {
+  margin: 10px 0 34px;
+
+  text-align: center;
+
+  color: #9c99a0;
+
+  font-size: 10px;
+}
+
+.stockflow-auth-error {
+  margin-bottom: 22px;
+
+  padding: 10px 12px;
+
+  color: #842029;
+  background: #f8d7da;
+
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+
+  font-size: 11px;
+}
+
+.stockflow-auth-field {
+  margin-bottom: 20px;
+}
+
+.stockflow-auth-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #7b7880;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.stockflow-auth-input-line {
+  display: flex;
+  align-items: center;
+
+  padding-bottom: 8px;
+
+  border-bottom:
+    1px solid #aaa8ae;
+
+  transition:
+    border-color 160ms ease;
+}
+
+.stockflow-auth-input-line:focus-within {
+  border-bottom-color: #151517;
+  border-bottom-width: 1.5px;
+}
+
+.stockflow-auth-input-line input {
+  width: 100%;
+
+  padding: 1px 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #232226;
+
+  font-size: 14px;
+}
+
+.stockflow-auth-password-toggle {
+  padding: 0 2px;
+
+  border: 0;
+
+  background: none;
+
+  color: #4b494e;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.stockflow-auth-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 12px 0 28px;
+
+  color: #9d99a2;
+
+  font-size: 9px;
+}
+
+.stockflow-auth-remember {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.stockflow-auth-options a {
+  color: #b0adb4;
+
+  text-decoration: none;
+}
+
+.stockflow-auth-options a:hover {
+  color: #55525a;
+}
+
+.stockflow-auth-submit {
+  width: 100%;
+  height: 44px;
+
+  border: 0;
+  border-radius: 24px;
+
+  background: #18181a;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+
+.stockflow-auth-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+.stockflow-auth-submit:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+}
+
+.stockflow-auth-secondary {
+  width: 100%;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 12px;
+
+  border: 0;
+  border-radius: 24px;
+
+  background: #f7f6f8;
+
+  color: #333136;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.stockflow-auth-secondary-icon {
+  font-weight: 800;
+
+  color: #4285f4;
+}
+
+.stockflow-auth-footer {
+  margin-top: 72px;
+
+  text-align: center;
+
+  color: #929099;
+
+  font-size: 9px;
+}
+
+.stockflow-auth-footer a {
+  color: #2c2a30;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .stockflow-auth-card {
+    grid-template-columns:
+      1fr 0.95fr;
+  }
+
+  .stockflow-auth-character-scene {
+    transform: scale(0.82);
+
+    transform-origin:
+      center bottom;
+  }
+
+  .stockflow-auth-form-panel {
+    padding:
+      44px 36px;
+  }
+}
+
+@media (max-width: 700px) {
+  .stockflow-auth-page {
+    padding: 0;
+  }
+
+  .stockflow-auth-card {
+    width: 100%;
+    min-height: 100vh;
+
+    grid-template-columns: 1fr;
+
+    border: 0;
+    border-radius: 0;
+  }
+
+  .stockflow-auth-stage {
+    min-height: 50vh;
+  }
+
+  .stockflow-auth-character-scene {
+    margin-bottom: -20px;
+
+    transform: scale(0.68);
+
+    transform-origin:
+      center bottom;
+  }
+
+  .stockflow-auth-form-panel {
+    padding:
+      36px 28px 48px;
+  }
+
+  .stockflow-auth-footer {
+    margin-top: 46px;
+  }
+}
+
+@media (max-width: 420px) {
+  .stockflow-auth-stage {
+    min-height: 46vh;
+  }
+
+  .stockflow-auth-character-scene {
+    transform: scale(0.6);
+  }
+
+  .stockflow-auth-form-panel {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stockflow-auth-page *,
+  .stockflow-auth-page *::before,
+  .stockflow-auth-page *::after {
+    animation-duration:
+      0.001ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.001ms !important;
+  }
+}
+
+
+

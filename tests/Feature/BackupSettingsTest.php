@@ -1,0 +1,4 @@
+<?php
+namespace Tests\Feature;
+use Illuminate\Foundation\Testing\RefreshDatabase; use Tests\TestCase;
+class BackupSettingsTest extends TestCase { use RefreshDatabase; public function test_superuser_can_manage_private_backup_settings():void {$this->seed();$token=$this->postJson('/api/v1/auth/login',['email'=>'admin@stockflow.local','password'=>'StockFlow@2026!'])->json('token');$h=['Authorization'=>'Bearer '.$token];$this->getJson('/api/v1/backups',$h)->assertOk()->assertJsonPath('data.settings.frequency','weekly');$this->patchJson('/api/v1/backups/settings',['automatic'=>true,'frequency'=>'daily','retention_days'=>14,'email_copy'=>false,'include_uploads'=>true,'storage'=>'local'],$h)->assertOk()->assertJsonPath('data.settings.automatic',true)->assertJsonPath('data.settings.retention_days',14);$this->assertDatabaseHas('organizations',['id'=>1]);}}

@@ -1,0 +1,4 @@
+<?php
+namespace App\Console\Commands;
+use App\Models\Organization; use App\Services\DatabaseBackupService; use Illuminate\Console\Command;
+class CreateDatabaseBackup extends Command { protected $signature='backups:create {organization? : Organization ID} {--uploads : Include uploaded media}'; protected $description='Create a private database backup archive'; public function handle(DatabaseBackupService $service):int {$organization=$this->argument('organization')?Organization::find($this->argument('organization')):Organization::first();if(!$organization){$this->error('Organization not found.');return self::FAILURE;}try{$backup=$service->create($organization,null,(bool)$this->option('uploads'));$this->info("Created {$backup->filename} ({$backup->size} bytes)");return self::SUCCESS;}catch(\Throwable $e){$this->error($e->getMessage());return self::FAILURE;}} }

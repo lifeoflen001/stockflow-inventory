@@ -1,0 +1,16 @@
+import { ArrowLeft, BarChart3 } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { endpoints } from "@/api/endpoints.ts";
+import { useApiQuery } from "@/hooks/use-api.ts";
+import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Card, CardContent } from "@/components/ui/card.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+
+type Details = { announcement:{id:number;title:string;summary?:string;content:string;category:string;priority:"normal"|"high";company_wide:boolean;starts_at:string;ends_at?:string;creator:{name:string};branches:{name:string}[];departments:{name:string}[];recipients:{name:string}[]}; statistics:{views:number;eligible:number} };
+export default function AnnouncementDetailsPage(){
+ const {id}=useParams(); const navigate=useNavigate(); const envelope=useApiQuery(endpoints.announcements.get,{id:id??""}); const response=envelope?.data as Details|undefined;
+ if(!response)return <div className="space-y-4 p-6"><Skeleton className="h-16"/><Skeleton className="h-72"/></div>;
+ const {announcement:a,statistics:s}=response; const percent=s.eligible?Math.min(100,Math.round(s.views/s.eligible*100)):0; const audience=a.company_wide?"Company-wide":a.departments.length?`${a.departments.map(x=>x.name).join(", ")} departments`:a.branches.length?`${a.branches.map(x=>x.name).join(", ")} branches`:a.recipients.map(x=>x.name).join(", ");
+ return <div className="space-y-5 p-6 pb-24 md:pb-6"><div className="flex items-start justify-between"><div><h1 className="text-xl font-semibold">Announcement Details</h1><p className="text-sm text-muted-foreground">View the full details and recipients of this announcement.</p></div><Button variant="outline" onClick={()=>navigate("/announcements")}><ArrowLeft className="size-4"/>Back</Button></div><div className="rounded-xl border bg-muted/10 p-5"><Card><CardContent className="p-6"><div className="flex items-start justify-between gap-4"><div><h2 className="text-xl font-semibold">{a.title}</h2><p className="mt-2 text-sm text-muted-foreground">{a.summary}</p></div><div className="flex gap-2"><Badge variant="outline">{a.category}</Badge>{a.priority==="high"&&<Badge className="bg-red-50 text-red-700">High Priority</Badge>}</div></div><div className="mt-5 flex flex-wrap gap-5 text-xs"><span><b>Start Date:</b> {a.starts_at.slice(0,10)}</span><span><b>End Date:</b> {a.ends_at?.slice(0,10)||"Open"}</span><span><b>Audience:</b> {audience}</span><span><b>Published by:</b> {a.creator.name}</span></div></CardContent></Card><Card className="mt-5"><CardContent className="p-6 text-sm leading-7 whitespace-pre-wrap">{a.content}</CardContent></Card><Card className="mt-5"><CardContent className="p-6"><h3 className="font-semibold">Engagement Statistics</h3><div className="mt-5 flex justify-between text-sm"><span>Views</span><span>{s.views} / {s.eligible} ({percent}%)</span></div><div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full bg-emerald-500" style={{width:`${percent}%`}}/></div><div className="mt-6 text-center"><Button variant="outline"><BarChart3 className="size-4"/>View Detailed Statistics</Button></div></CardContent></Card></div></div>;
+}

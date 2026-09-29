@@ -19,4 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'audit.api' => \App\Http\Middleware\AuditApiRequest::class,
         ]);
     })
+    ->withExceptions(function (Exceptions $exceptions) {
+        // Keep Laravel's default exception handler binding while using the
+        // framework's standard production responses.
+    })
     ->create();

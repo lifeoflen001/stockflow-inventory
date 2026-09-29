@@ -16,8 +16,10 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request): JsonResponse
     {
-        $user = User::query()->with('organization', 'roles', 'department', 'supplier', 'permissionOverrides')->where('email', $request->string('email'))->first();
-        if (! $user || ! $user->is_active || ! Hash::check($request->string('password'), $user->password)) {
+        $email = $request->string('email')->toString();
+        $password = $request->string('password')->toString();
+        $user = User::query()->with('organization', 'roles', 'department', 'supplier', 'permissionOverrides')->where('email', $email)->first();
+        if (! $user || ! $user->is_active || ! Hash::check($password, $user->password)) {
             return ApiResponse::error('Invalid email or password.', 422, ['email' => ['The entered credentials do not much our records.']]);
         }
         if (! $user->email_verified_at) return ApiResponse::error('Verify your email before signing in.', 403, ['email' => ['Email verification is required.']]);
@@ -45,7 +47,7 @@ class AuthController extends Controller
     public function unlock(Request $request): JsonResponse
     {
         $user = $request->user();
-        if (! $user || ! Hash::check($request->string('password'), $user->password)) {
+        if (! $user || ! Hash::check($request->string('password')->toString(), $user->password)) {
             return ApiResponse::error('Incorrect password. Please try again.', 422, ['password' => ['The password is incorrect.']]);
         }
 

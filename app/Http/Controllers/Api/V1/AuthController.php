@@ -16,34 +16,27 @@ class AuthController extends Controller
 {
     public function login(LoginRequest $request): JsonResponse
     {
-        try {
-            $email = $request->string('email')->toString();
-            $password = $request->string('password')->toString();
-            $user = User::query()->with('organization', 'roles', 'department', 'supplier', 'permissionOverrides')->where('email', $email)->first();
-            if (! $user || ! $user->is_active || ! Hash::check($password, $user->password)) {
-                return ApiResponse::error('Invalid email or password.', 422, ['email' => ['The entered credentials do not much our records.']]);
-            }
-            if (! $user->email_verified_at) return ApiResponse::error('Verify your email before signing in.', 403, ['email' => ['Email verification is required.']]);
-
-            $plainToken = Str::random(80);
-            // Keep one active browser session per account. This also invalidates
-            // sessions left behind on a shared or lost device.
-            $user->apiTokens()->delete();
-            ApiToken::create([
-                'user_id' => $user->id,
-                'name' => 'web',
-                'token_hash' => hash('sha256', $plainToken),
-                'expires_at' => now()->addHours(12),
-            ]);
-            $user->forceFill(['last_login_at' => now()])->save();
-
-            return response()->json(['token' => $plainToken, 'user' => $this->userPayload($user)]);
-        } catch (\Throwable $exception) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-                'exception' => $exception::class,
-            ], 500);
+        $email = $request->string('email')->toString();
+        $password = $request->string('password')->toString();
+        $user = User::query()->with('organization', 'roles', 'department', 'supplier', 'permissionOverrides')->where('email', $email)->first();
+        if (! $user || ! $user->is_active || ! Hash::check($password, $user->password)) {
+            return ApiResponse::error('Invalid email or password.', 422, ['email' => ['The entered credentials do not much our records.']]);
         }
+        if (! $user->email_verified_at) return ApiResponse::error('Verify your email before signing in.', 403, ['email' => ['Email verification is required.']]);
+
+        $plainToken = Str::random(80);
+        // Keep one active browser session per account. This also invalidates
+        // sessions left behind on a shared or lost device.
+        $user->apiTokens()->delete();
+        ApiToken::create([
+            'user_id' => $user->id,
+            'name' => 'web',
+            'token_hash' => hash('sha256', $plainToken),
+            'expires_at' => now()->addHours(12),
+        ]);
+        $user->forceFill(['last_login_at' => now()])->save();
+
+        return response()->json(['token' => $plainToken, 'user' => $this->userPayload($user)]);
     }
 
     public function me(Request $request): JsonResponse

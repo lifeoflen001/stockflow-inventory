@@ -32,7 +32,7 @@ RUN printf '%s\n' '<VirtualHost *:80>' '    DocumentRoot /var/www/html/public' '
     && printf '%s\n' '<Directory /var/www/html/public>' '    AllowOverride All' '    Require all granted' '</Directory>' >> /etc/apache2/apache2.conf \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
     && touch database/database.sqlite \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data database storage bootstrap/cache
 
 EXPOSE 10000
 

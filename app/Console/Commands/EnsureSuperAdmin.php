@@ -53,12 +53,12 @@ class EnsureSuperAdmin extends Command
 
         if ($existing) {
             $user = $existing;
-            $user->update([
+            $user->forceFill([
                 'organization_id' => $organization->id,
                 'name' => $name,
                 'is_active' => true,
                 'email_verified_at' => $user->email_verified_at ?: now(),
-            ]);
+            ])->save();
             $this->line("Super administrator already exists: {$email}");
         } else {
             $user = User::create([
@@ -67,8 +67,8 @@ class EnsureSuperAdmin extends Command
                 'email' => $email,
                 'password' => Hash::make($password),
                 'is_active' => true,
-                'email_verified_at' => now(),
             ]);
+            $user->forceFill(['email_verified_at' => now()])->save();
             $this->info("Super administrator created for {$organization->name}: {$email}");
         }
 

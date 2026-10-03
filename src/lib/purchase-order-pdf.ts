@@ -1,5 +1,5 @@
 import { loadSignatureImage } from "@/lib/pdf-signature.ts";
-import pdfLogoAssetUrl from "@/assets/tanzania-specialist-logo.png";
+import pdfLogoAssetUrl from "@/assets/neatnest-lotus-logo.png";
 import {
   createCorporatePdf,
   loadCorporateLogo,
@@ -98,11 +98,11 @@ const TOTAL_BG: [number, number, number] = [242, 247, 251];
  *
  * Put your logo here:
  *
- * public/images/tanzania-specialist-logo.png
+ * public/neatnest-lotus-logo.png
  *
  * Browser URL becomes:
  *
- * /images/tanzania-specialist-logo.png
+ * /neatnest-lotus-logo.png
  */
 const LOGO_URL = pdfLogoAssetUrl;
 
@@ -191,7 +191,7 @@ function setBlue(pdf: any) {
  *
  * If that fails, it falls back to:
  *
- * public/images/tanzania-specialist-logo.png
+ * public/neatnest-lotus-logo.png
  */
 async function loadLpoLogo() {
   try {
@@ -398,7 +398,7 @@ function drawHeader(
 
   const companyName =
     company?.name?.trim() ||
-    "R & M TANZANIA SPECIALIST LTD";
+    "NeatNest Organized Inventories";
 
   pdf.setFont(
     "helvetica",
@@ -459,15 +459,15 @@ function drawHeader(
 
   const address =
     company?.address ||
-    "P.O Box 14276 Arusha, Tanzania.";
+    "";
 
   const phone =
     company?.phone ||
-    "255 786 447 455";
+    "-";
 
   const email =
     company?.email ||
-    "booking@tanzaniaspecialist.com";
+    "-";
 
   pdf.text(
     address,

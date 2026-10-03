@@ -31,7 +31,7 @@ export async function downloadReportPdf(report: ReportDocument) {
   const contentWidth = pageWidth - PDF_PAGE.margin * 2;
   const currency = report.currency || "TSHS";
   const logo = await loadCorporateLogo();
-  const company = { name: "R & M TANZANIA SPECIALIST LTD" };
+  const company = { name: "NeatNest Organized Inventories" };
   let y = CompanyHeader(pdf, company, logo, { orientation: "landscape" });
   y = DocumentTitle(pdf, report.name, report.description, y + 8);
   y = InfoBlock(pdf, { x: PDF_PAGE.margin, y, width: contentWidth, columns: 4, title: "Report context", items: [{ label: "Generated", value: formatPdfDate(report.generated_at) }, { label: "Period from", value: report.filters?.from || "All time" }, { label: "Period to", value: report.filters?.to || "Today" }, { label: "Currency", value: currency }] }) + 5;

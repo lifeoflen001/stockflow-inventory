@@ -15,7 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'brand_logo_url' => env('BRAND_LOGO_URL', 'https://tanzania-specialist.com/wp-content/themes/tanzania-specialist/public/images/logo-en.svg'),
+    'brand_logo_url' => env('BRAND_LOGO_URL', '/neatnest-lotus-logo.png'),
 
     /*
     |--------------------------------------------------------------------------

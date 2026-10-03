@@ -34,10 +34,10 @@ type Company = {
  * ============================================================================
  */
 const COMPANY = {
-  name: "R & M TANZANIA SPECIALIST LTD",
-  address: "P.O Box 14276 Arusha, Tanzania.",
-  phone: "255 786 447 455",
-  email: "booking@tanzaniaspecialist.com",
+  name: "NeatNest Organized Inventories",
+  address: "",
+  phone: "-",
+  email: "-",
 };
 
 /**

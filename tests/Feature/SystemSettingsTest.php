@@ -28,14 +28,14 @@ class SystemSettingsTest extends TestCase
         $token = $this->token();
 
         $this->withToken($token)->patchJson('/api/v1/settings', [
-            'name' => 'R & M Tanzania Specialist Ltd',
+            'name' => 'NeatNest Organized Inventories',
             'currency' => 'USD',
             'timezone' => 'Africa/Nairobi',
             'date_format' => 'Y-m-d',
             'low_stock_notifications' => false,
             'email_notifications' => false,
         ])->assertOk()
-            ->assertJsonPath('data.name', 'R & M Tanzania Specialist Ltd')
+            ->assertJsonPath('data.name', 'NeatNest Organized Inventories')
             ->assertJsonPath('data.settings.currency', 'USD')
             ->assertJsonPath('data.settings.timezone', 'Africa/Nairobi')
             ->assertJsonPath('data.settings.date_format', 'Y-m-d')
@@ -44,7 +44,7 @@ class SystemSettingsTest extends TestCase
 
         $this->assertDatabaseHas('organizations', [
             'id' => 1,
-            'name' => 'R & M Tanzania Specialist Ltd',
+            'name' => 'NeatNest Organized Inventories',
             'currency' => 'USD',
             'timezone' => 'Africa/Nairobi',
         ]);

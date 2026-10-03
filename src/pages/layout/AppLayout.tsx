@@ -155,7 +155,6 @@ const reportLinks = [{ label: "Profit & Loss Report", path: "/reports?report=pro
 
 const webApps = [
   { name: "Proposal Meister", shortName: "P.Meister", url: "https://proposalmeister.com/auth/login", domain: "proposalmeister.com" },
-  { name: "SEITS", shortName: "SEITS sys", url: "http://seits.tanzaniaspecialist.co.tz/", domain: "seits.tanzaniaspecialist.co.tz" },
   { name: "Africa Safari Trips", shortName: "Safari Portal", url: "https://portal.africasafaritrips.com/", domain: "portal.africasafaritrips.com" },
   { name: "WhatsApp Web", shortName: "WhatsApp", url: "https://web.whatsapp.com/", domain: "web.whatsapp.com" },
 ];

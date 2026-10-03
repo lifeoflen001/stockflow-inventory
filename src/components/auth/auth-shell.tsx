@@ -74,7 +74,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
         <section className="auth-form-panel">
           <div className="auth-form-content">
             <div className="auth-brand-lockup">
-              <img src={BRAND_LOGO_URL} alt="Tanzania Specialist" />
+              <img src={BRAND_LOGO_URL} alt="NeatNest Organized Inventories" style={isDark ? undefined : { filter: "brightness(0) saturate(100%)" }} />
             </div>
             {children}
           </div>

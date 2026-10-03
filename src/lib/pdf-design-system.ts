@@ -1,6 +1,6 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import localLogoUrl from "@/assets/tanzania-specialist-logo.png";
+import localLogoUrl from "@/assets/neatnest-lotus-logo.png";
 import { addSignatureImage, type SignatureImage } from "@/lib/pdf-signature.ts";
 
 export type PdfCompany = {
@@ -90,10 +90,10 @@ export function CompanyHeader(pdf: jsPDF, company: PdfCompany | undefined, logo:
   const top = options.top ?? 10;
   const height = options.orientation === "landscape" ? 34 : 40;
   const width = pageWidth - margin * 2;
-  const companyName = company?.name?.trim() || "R & M TANZANIA SPECIALIST LTD";
-  const address = company?.address?.trim() || "P. O. Box 14672 Arusha, Tanzania";
-  const phone = company?.phone?.trim() || "0786 447 455";
-  const email = company?.email?.trim() || "booking@tanzaniaspecialist.com";
+  const companyName = company?.name?.trim() || "NeatNest Organized Inventories";
+  const address = company?.address?.trim() || "";
+  const phone = company?.phone?.trim() || "-";
+  const email = company?.email?.trim() || "-";
   const logoBox = { x: margin + 3, y: top + 4, width: 43, height: height - 8 };
   const informationX = logoBox.x + logoBox.width + 9;
   const informationWidth = pageWidth - margin - informationX;
@@ -276,7 +276,7 @@ export async function downloadCorporateTablePdf(title: string, headers: string[]
   const logo = await loadCorporateLogo();
   const pageWidth = pdf.internal.pageSize.getWidth();
   const contentWidth = pageWidth - PDF_PAGE.margin * 2;
-  let y = CompanyHeader(pdf, { name: "R & M TANZANIA SPECIALIST LTD" }, logo, { orientation });
+  let y = CompanyHeader(pdf, { name: "NeatNest Organized Inventories" }, logo, { orientation });
   y = DocumentTitle(pdf, title, "Data export", y + 8);
   y = InfoBlock(pdf, { x: PDF_PAGE.margin, y, width: contentWidth, columns: 2, title: "Export metadata", items: [{ label: "Generated", value: formatPdfDateTime(new Date()) }, { label: "Rows", value: rows.length }] }) + 6;
   DataTable(pdf, { startY: y, headers, rows, onPage: () => DocumentFooter(pdf), fontSize: headers.length > 6 ? 7 : 8 });

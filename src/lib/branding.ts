@@ -1,12 +1,10 @@
-import logoUrl from "@/assets/logo4.png";
-import lightLogoUrl from "@/assets/brand-logo.png";
-import lightMarkUrl from "@/assets/brand-mark.png";
+import logoUrl from "@/assets/neatnest-lotus-logo.png";
 
 export const BRAND_LOGO_URL = logoUrl;
-export const BRAND_LOGO_LIGHT_URL = lightLogoUrl;
+export const BRAND_LOGO_LIGHT_URL = logoUrl;
 export const BRAND_LOGO_TRANSPARENT_URL = logoUrl;
-export const BRAND_MARK_URL = logoUrl;
-export const BRAND_MARK_LIGHT_URL = lightMarkUrl;
+export const BRAND_MARK_URL = "/neatnest-lotus-mark.svg";
+export const BRAND_MARK_LIGHT_URL = "/neatnest-lotus-mark.svg";
 
 export async function loadBrandLogoDataUrl() {
   const response = await fetch(BRAND_LOGO_TRANSPARENT_URL);
